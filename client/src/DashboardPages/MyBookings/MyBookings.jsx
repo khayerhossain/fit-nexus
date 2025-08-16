@@ -56,7 +56,7 @@ const MyBookings = () => {
   };
 
   return (
-    <section className="py-16 text-white min-h-screen">
+    <section className="text-white min-h-screen">
       <Container>
         <h2 className="text-3xl font-bold mb-8 text-center">📋 My Bookings</h2>
 

@@ -89,7 +89,7 @@ const BeATrainer = () => {
   };
 
   return (
-    <section className="py-10 text-white">
+    <section className=" text-white">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 40 }}

@@ -33,7 +33,7 @@ const classesInfo = {
 const CheckoutForm = ({ onClose, bookingInfo }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { user } = useAuth(); // ✅ Get user with email
+  const { user } = useAuth(); //  Get user with email
 
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,7 @@ const CheckoutForm = ({ onClose, bookingInfo }) => {
     }
 
     try {
-      // ✅ Step 1: Create payment method
+      // Step 1: Create Stripe Payment Method
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
         card,
@@ -69,7 +69,8 @@ const CheckoutForm = ({ onClose, bookingInfo }) => {
         setLoading(false);
         return;
       }
-      //  Build classDetails for selected classes
+
+      // Step 2: Build classDetails
       const classDetails = {};
       (bookingInfo.selectedClasses || []).forEach((className) => {
         if (classesInfo[className]) {
@@ -85,28 +86,29 @@ const CheckoutForm = ({ onClose, bookingInfo }) => {
         }
       });
 
-      // ✅ Step 2: Combine booking info with user email
+      // Step 3: Build bookingData
       const bookingData = {
-        userName: bookingInfo.userName || "N/A",
-        trainerName: bookingInfo.trainerName || "N/A",
-        day: bookingInfo.day || "N/A",
-        time: bookingInfo.time || "N/A",
+        userName: bookingInfo.userName,
+        trainerName: bookingInfo.trainerName,
+        day: bookingInfo.days ? bookingInfo.days[0] : "N/A",
+        time: bookingInfo.times ? bookingInfo.times[0] : "N/A",
         selectedClasses: bookingInfo.selectedClasses || [],
-        classDetails, // ✅ sending this to backend
+        classDetails,
         package: {
-          name: bookingInfo.package?.packageName || "N/A",
+          name: bookingInfo.package?.name || "N/A",
           price: bookingInfo.package?.price || 0,
         },
         notes: bookingInfo.notes || "",
-        email: user?.email,
+        email: bookingInfo.userEmail,
         amount: bookingInfo.package?.price || 0,
         paymentMethodId: paymentMethod.id,
         paymentStatus: "paid",
         createdAt: new Date().toISOString(),
       };
-      console.log("classDetails sending:", classDetails);
 
-      // ✅ Step 3: Send to backend
+      console.log(" BookingData sending:", bookingData); // Debugging
+
+      // Step 4: Send to backend
       const res = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/create-payment-intent`,
         bookingData
@@ -117,7 +119,7 @@ const CheckoutForm = ({ onClose, bookingInfo }) => {
       toast.success("Payment Successful!");
       onClose();
     } catch (err) {
-      console.error("DB Error:", err);
+      console.error("DB / Payment Error:", err);
       setErrorMsg("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

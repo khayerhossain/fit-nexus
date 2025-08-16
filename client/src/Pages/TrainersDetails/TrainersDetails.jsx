@@ -8,7 +8,7 @@ const TrainersDetails = () => {
   const trainer = useLoaderData();
 
   return (
-    <section className="py-20 bg-gradient-to-r from-black via-gray-900 to-black min-h-screen flex items-center justify-center">
+    <section className="py-20 bg-gradient-to-r from-black via-gray-900 to-black flex items-center justify-center">
       <Helmet>
         <title>FitNexus | Trainer - {trainer.fullName}</title>
       </Helmet>
