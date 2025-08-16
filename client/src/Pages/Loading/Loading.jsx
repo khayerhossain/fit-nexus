@@ -1,17 +1,16 @@
-import { PacmanLoader } from 'react-spinners'
+import React from "react";
+import "./loading.css"
 
 const Loading = ({ smallHeight }) => {
   return (
     <div
-      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
-      flex 
-      flex-col 
-      justify-center 
-      items-center `}
+      className={`${
+        smallHeight ? "h-[250px]" : "h-[100vh]"
+      } flex flex-col justify-center items-center`}
     >
-      <PacmanLoader size={8} color='red'  />
+      <div className="loader"></div>
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

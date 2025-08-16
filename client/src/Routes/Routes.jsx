@@ -46,14 +46,18 @@ export const router = createBrowserRouter([
         path: "/trainers-details/:id",
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_BASE_URL}/trainers/${params.id}`),
-        Component: TrainersDetails,
+        element: <PrivateRoutes>
+          <TrainersDetails/>
+        </PrivateRoutes>,
       },
 
       {
         path: "/trainer-booking-form/:id",
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_BASE_URL}/trainers/${params.id}`),
-        Component: TrainerBookingForm,
+        element:  <PrivateRoutes>
+          <TrainerBookingForm/>
+        </PrivateRoutes>,
       },
     ],
   },

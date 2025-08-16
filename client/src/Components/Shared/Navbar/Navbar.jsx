@@ -17,10 +17,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // hide navbar in login/register page
-  const hideNavbarPaths = ["/login", "/register"];
-  if (hideNavbarPaths.includes(location.pathname)) return null;
-
   const isActive = (path) =>
     location.pathname === path
       ? "bg-white/30 text-red-500 font-semibold"
@@ -32,6 +28,58 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  // ✅ Public links (always show)
+  const publicLinks = (
+    <>
+      <Link
+        to="/"
+        className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
+          "/"
+        )}`}
+      >
+        Home
+      </Link>
+      <Link
+        to="/alltrainers"
+        className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
+          "/alltrainers"
+        )}`}
+      >
+        All Trainers
+      </Link>
+      <Link
+        to="/allclasses"
+        className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
+          "/allclasses"
+        )}`}
+      >
+        All Classes
+      </Link>
+    </>
+  );
+
+  // ✅ Protected links (only show after login)
+  const privateLinks = (
+    <>
+      <Link
+        to="/community"
+        className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
+          "/community"
+        )}`}
+      >
+        Community
+      </Link>
+      <Link
+        to="/dashboard"
+        className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
+          "/dashboard-layout"
+        )}`}
+      >
+        Dashboard
+      </Link>
+    </>
+  );
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
@@ -40,7 +88,7 @@ const Navbar = () => {
     >
       <Container>
         <div className="flex items-center justify-between py-2">
-          {/* Logo + Title together */}
+          {/* Logo + Title */}
           <Link to="/" className="flex items-center">
             <img className="w-8 h-8" src={logo} alt="Logo" />
             <span className="text-xl font-bold text-red-500 px-2 py-1 rounded-xl hover:bg-white/10 transition">
@@ -48,50 +96,10 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Desktop Nav links */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-            <Link
-              to="/"
-              className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
-                "/"
-              )}`}
-            >
-              Home
-            </Link>
-            <Link
-              to="/alltrainers"
-              className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
-                "/alltrainers"
-              )}`}
-            >
-              All Trainers
-            </Link>
-            <Link
-              to="/allclasses"
-              className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
-                "/allclasses"
-              )}`}
-            >
-              All Classes
-            </Link>
-            <Link
-              to="/community"
-              className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
-                "/community"
-              )}`}
-            >
-              Community
-            </Link>
-            {user && (
-              <Link
-                to="/dashboard"
-                className={`px-3 py-2 rounded-xl text-sm lg:text-base transition ${isActive(
-                  "/dashboard-layout"
-                )}`}
-              >
-                Dashboard
-              </Link>
-            )}
+            {publicLinks}
+            {user && privateLinks}
           </div>
 
           {/* Right side buttons */}
@@ -157,38 +165,13 @@ const Navbar = () => {
               tabIndex={0}
               className="menu dropdown-content mt-3 z-[1] p-2 shadow bg-black/80 backdrop-blur-md rounded-box w-40 space-y-1"
             >
-              <li>
-                <Link to="/" className={isActive("/")}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/alltrainers" className={isActive("/alltrainers")}>
-                  All Trainers
-                </Link>
-              </li>
-              <li>
-                <Link to="/allclasses" className={isActive("/allclasses")}>
-                  All Classes
-                </Link>
-              </li>
-              <li>
-                <Link to="/community" className={isActive("/community")}>
-                  Community
-                </Link>
-              </li>
+              {/* Public */}
+              <li>{publicLinks}</li>
+
+              {/* Private */}
               {user && (
-                <li>
-                  <Link
-                    to="/dashboard"
-                    className={isActive("/dashboard-layout")}
-                  >
-                    Dashboard
-                  </Link>
-                </li>
-              )}
-              {user ? (
                 <>
+                  <li>{privateLinks}</li>
                   <li>
                     <Link to="/dashboard/profile">Profile</Link>
                   </li>
@@ -198,7 +181,10 @@ const Navbar = () => {
                     </button>
                   </li>
                 </>
-              ) : (
+              )}
+
+              {/* If not logged in */}
+              {!user && (
                 <>
                   <li>
                     <Link to="/login">Login</Link>

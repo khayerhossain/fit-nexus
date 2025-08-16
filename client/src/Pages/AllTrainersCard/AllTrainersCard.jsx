@@ -8,7 +8,7 @@ const AllTrainersCard = ({ trainer }) => {
       <img
         src={trainer.profileImage}
         alt={trainer.name}
-        className="w-full h-48 object-cover rounded-xl mb-4"
+        className="w-full h-60 object-cover rounded-xl mb-4"
       />
       <h2 className="text-xl font-semibold text-white">{trainer.fullName}</h2>
       <p className="text-gray-300 text-sm">

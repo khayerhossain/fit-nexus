@@ -675,6 +675,48 @@ async function run() {
       }
     });
 
+    //get revenue for showing growth!
+app.get("/revenue-history", async (req, res) => {
+  try {
+    const bookingsCollection = db.collection("bookingData");
+
+    const history = await bookingsCollection
+      .aggregate([
+        { $match: { paymentStatus: "succeeded" } }, // only success
+        {
+          $group: {
+            _id: { month: { $month: { $toDate: "$createdAt" } } }, // convert string to date
+            totalRevenue: { $sum: "$amount" },
+          },
+        },
+        {
+          $project: {
+            month: "$_id.month",
+            amount: "$totalRevenue",
+            _id: 0,
+          },
+        },
+        { $sort: { month: 1 } },
+      ])
+      .toArray();
+
+    // month number -> month name
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    const formattedHistory = history.map(item => ({
+      month: months[item.month - 1],
+      amount: item.amount,
+    }));
+
+    res.json(formattedHistory);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
     // await client.db("admin").command({ ping: 1 });
     // console.log(
     //   "Pinged your deployment. You successfully connected to MongoDB!"
