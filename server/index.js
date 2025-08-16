@@ -18,13 +18,9 @@ const port = process.env.PORT || 5000;
 
 // Middlewares
 app.use(
-  cors({
-    // origin: "http://localhost:5173",
-    // credentials: true,
-  })
+  cors({})
 );
 
-app.use(express.json());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
@@ -158,7 +154,7 @@ async function run() {
     });
 
     // save applied trainers data into database (pending requests)
-    app.post("/applied-trainers", verifyToken, async (req, res) => {
+    app.post("/applied-trainers",  async (req, res) => {
       try {
         const trainerData = req.body;
         const result = await appliedTrainersCollection.insertOne(trainerData);
@@ -272,7 +268,7 @@ async function run() {
     });
 
     // get approved trainers for all trainers admin page
-    app.get("/.", async (req, res) => {
+    app.get("/applied-trainers", async (req, res) => {
       try {
         const trainers = await appliedTrainersCollection
           .find({ status: "trainer" })
