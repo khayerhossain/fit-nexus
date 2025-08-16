@@ -38,12 +38,12 @@ const TrainerBookingForm = () => {
   }, []);
 
   const onSubmit = (data) => {
-    if (!selectedPackageId) return alert("Please select a package");
+    if (!selectedPackageId) return toast.error("Please select a package");
     if (selectedClasses.length === 0)
       return toast.error("Please select at least one class");
     if (!data.selectedDays || data.selectedDays.length === 0)
       return toast.error("Please select at least one day");
-    if (!bookingTime.trim()) return alert("Please enter a valid booking time");
+    if (!bookingTime.trim()) return toast.error("Please enter a valid booking time");
 
     const selectedPackage = packages.find((p) => p._id === selectedPackageId);
 

@@ -95,7 +95,7 @@ const Balance = () => {
           </div>
           <h2 className="text-lg mt-3">Total Revenue</h2>
           <p className="text-3xl font-bold text-green-400">
-            ${statsData?.totalRevenue || 0}
+            ${statsData?.totalRevenue?.toLocaleString() || "0"}
           </p>
         </div>
 

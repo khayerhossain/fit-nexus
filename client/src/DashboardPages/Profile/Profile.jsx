@@ -75,7 +75,7 @@ const Profile = () => {
 
   return (
     <section className="py-16 text-white">
-      <div className="max-w-md mx-auto bg-white/5 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-white/10 space-y-6 text-center">
+      <div className="max-w-md mx-auto bg-white/5 backdrop-blur-md rounded-2xl p-6 shadow-2xl border border-white/10 text-center">
         <h2 className="text-2xl font-bold mb-4">👤 My Profile</h2>
 
         <div className="flex justify-center">

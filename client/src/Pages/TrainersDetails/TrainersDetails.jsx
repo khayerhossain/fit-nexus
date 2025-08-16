@@ -90,8 +90,7 @@ const TrainersDetails = () => {
             <div className="mt-8">
               <Link to={`/trainer-booking-form/${trainer._id}`}>
                 <button
-                  className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold transition-transform hover:scale-105"
-                  // Add onClick or Link logic here for booking page redirect
+                  className="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold transition-transform hover:scale-105 cursor-pointer"
                 >
                   Book Now
                 </button>
