@@ -113,16 +113,16 @@ const Banner = () => {
               </p>
               <div className="flex justify-center lg:justify-start gap-3">
                 <Link
-                  to={slides[currentSlide].buttonLink}
+                  to="/allclasses"
                   className="bg-white text-black px-5 py-2 rounded-xl font-semibold hover:bg-gray-200 transition"
                 >
-                  {slides[currentSlide].buttonText}
+                 Start Now
                 </Link>
                 <Link
-                  to="/about"
+                  to="/alltrainers"
                   className="text-white border border-white px-5 py-2 rounded-xl hover:bg-white hover:text-black transition"
                 >
-                  Learn More
+                  See More
                 </Link>
               </div>
             </motion.div>

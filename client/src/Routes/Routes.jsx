@@ -23,6 +23,7 @@ import Balance from "../DashboardPages/Balance/Balance";
 import PrivateRoutes from "../Providers/PrivateRoutes";
 import AddForum from "../DashboardPages/AddForum/AddForum";
 import Error from "../Pages/Error/Error";
+import About from "../Home/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
       { path: "/register", Component: Register },
       { path: "/alltrainers", Component: AllTrainers },
       { path: "/allclasses", Component: AllClasses },
+      { path: "/about", Component:About },
       {
         path: "/community",
         element: (

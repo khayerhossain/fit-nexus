@@ -21,10 +21,10 @@ const About = () => {
               FitNexus is your ultimate fitness companion, built to help you
               crush your health goals. Whether you're a newbie or a pro, our
               platform offers personalized tracking, expert trainers, and smart
-              tools — all in one place.
+              tools all in one place.
             </p>
             <p className="text-gray-300 text-base md:text-lg mb-4">
-              We’re not just a fitness app — we’re a community. From booking
+              We’re not just a fitness app we’re a community. From booking
               classes to sharing your progress, everything is designed to keep
               you moving forward. With real-time tracking and interactive
               features, FitNexus turns your fitness grind into a lifestyle.
