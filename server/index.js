@@ -496,22 +496,34 @@ async function run() {
     });
 
     // get classes for all classes page with
+    // get classes for all classes page with search, pagination & sort
     app.get("/classes", async (req, res) => {
-      const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 10;
-      const sortOrder = req.query.sort === "oldest" ? 1 : -1; // default: newest first
-      const skip = (page - 1) * limit;
+      try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const sortOrder = req.query.sort === "oldest" ? 1 : -1; // default newest first
+        const skip = (page - 1) * limit;
+        const titleSearch = req.query.title || "";
 
-      const total = await classesCollection.estimatedDocumentCount();
-      const result = await classesCollection
-        .find()
-        .sort({ createdAt: sortOrder }) // use createdAt if available
-        // .sort({ _id: sortOrder }) // use _id if createdAt is not available
-        .skip(skip)
-        .limit(limit)
-        .toArray();
+        // build query
+        const query = {};
+        if (titleSearch) {
+          query.title = { $regex: titleSearch, $options: "i" }; // case-insensitive search
+        }
 
-      res.send({ total, result });
+        const total = await classesCollection.countDocuments(query); // count with search
+        const result = await classesCollection
+          .find(query)
+          .sort({ createdAt: sortOrder })
+          .skip(skip)
+          .limit(limit)
+          .toArray();
+
+        res.send({ total, result });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Failed to fetch classes" });
+      }
     });
 
     // For All Classes page: get trainers by category (max 5)
