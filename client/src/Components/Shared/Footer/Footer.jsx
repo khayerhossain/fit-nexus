@@ -60,7 +60,7 @@ const Footer = () => {
             {/* Social Media */}
             <div className="flex space-x-4 text-xl mb-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/1CUzuCoed7/"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-blue-500"
@@ -68,7 +68,7 @@ const Footer = () => {
                 <FaFacebookF />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/khayerhossain_45?igsh=NXNrOGY3dWwyYzlo"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-pink-500"
@@ -76,7 +76,7 @@ const Footer = () => {
                 <FaInstagram />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com/khayerhossain45"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-sky-400"
@@ -84,7 +84,7 @@ const Footer = () => {
                 <FaTwitter />
               </a>
               <a
-                href="mailto:support@fitnexus.com"
+                href="mailto:khayerhossain62@gmail.com"
                 className="hover:text-green-400"
               >
                 <FaEnvelope />

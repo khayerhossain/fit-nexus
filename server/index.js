@@ -113,11 +113,21 @@ async function run() {
     });
 
     // get all traines for all trainers page and admin trainers table
+    // get all trainers with sorting
     app.get("/trainers", async (req, res) => {
       try {
+        const { sort } = req.query; // "newest" or "oldest"
+        let sortOption = { _id: -1 }; // default newest
+
+        if (sort === "oldest") {
+          sortOption = { _id: 1 };
+        }
+
         const trainers = await appliedTrainersCollection
           .find({ status: "trainer" })
+          .sort(sortOption)
           .toArray();
+
         res.send(trainers);
       } catch (error) {
         console.error("Failed to fetch trainers:", error);
@@ -495,7 +505,6 @@ async function run() {
       res.send(result);
     });
 
-    // get classes for all classes page with
     // get classes for all classes page with search, pagination & sort
     app.get("/classes", async (req, res) => {
       try {

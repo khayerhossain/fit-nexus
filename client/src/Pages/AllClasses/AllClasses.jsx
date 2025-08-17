@@ -81,7 +81,7 @@ const AllClasses = () => {
                 setPage(1);
                 setSortOrder(e.target.value);
               }}
-              className="appearance-none px-6 py-2 pr-10 rounded-xl bg-gray-800 text-white font-medium shadow-md border border-gray-700 focus:ring-2 focus:ring-red-500 cursor-pointer transition duration-300"
+              className="appearance-none px-6 py-2 pr-10 rounded-xl bg-gray-800 text-white font-medium shadow-md focus:ring-2 cursor-pointer transition duration-300"
             >
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
