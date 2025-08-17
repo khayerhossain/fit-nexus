@@ -6,53 +6,40 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { Link } from "react-router";
-import Container from "../Container/Container"; // Adjust path if needed
-import logo from "../../../assets/logo.png"; // Adjust path if needed
+import Container from "../Container/Container";
+import logo from "../../../assets/logo.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-10">
+    <footer className="bg-gray-900 text-gray-300 py-14">
       <Container>
-        <div className="grid md:grid-cols-4 gap-8 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
           {/* Logo + Name */}
           <div className="flex flex-col items-start">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="Logo" className="w-8 h-8" />
-              <span className="text-2xl font-bold text-red-500">FitNexus</span>
+            <Link to="/" className="flex items-center">
+              <img className="w-12 h-10" src={logo} alt="Logo" />
+              <span className="text-xl font-bold text-red-500 mt-2 py-1 rounded-xl hover:bg-white/10 transition">
+                FitNexus
+              </span>
             </Link>
-            <p className="max-w-xs">
+            <p className="max-w-xs mt-2">
               Empowering your fitness journey with expert trainers and smart
               tools.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Terms & Policy */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-white font-semibold mb-4">Information</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-white">
-                  Home
+                <Link to="/terms" className="hover:text-white">
+                  Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link to="/alltrainers" className="hover:text-white">
-                  All Trainers
-                </Link>
-              </li>
-              <li>
-                <Link to="/allclasses" className="hover:text-white">
-                  All Classes
-                </Link>
-              </li>
-              <li>
-                <Link to="/community" className="hover:text-white">
-                  Community
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard" className="hover:text-white">
-                  Dashboard
+                <Link to="/privacy" className="hover:text-white">
+                  Privacy Policy
                 </Link>
               </li>
             </ul>
@@ -66,10 +53,12 @@ const Footer = () => {
             <p>Address: Gulshan, Dhaka, Bangladesh</p>
           </div>
 
-          {/* Social Media */}
+          {/* Social Media + Payment */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Follow Us</h4>
-            <div className="flex space-x-4 text-xl">
+            <h4 className="text-white font-semibold mb-4">Follow & Pay</h4>
+
+            {/* Social Media */}
+            <div className="flex space-x-4 text-xl mb-4">
               <a
                 href="https://facebook.com"
                 target="_blank"
@@ -100,6 +89,25 @@ const Footer = () => {
               >
                 <FaEnvelope />
               </a>
+            </div>
+
+            {/* Payment Cards */}
+            <div className="flex space-x-3">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                alt="PayPal"
+                className="w-10 h-7 object-contain rounded-lg shadow-md bg-white p-1 cursor-pointer transform transition duration-300 hover:scale-110 hover:shadow-lg"
+              />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                alt="Visa"
+                className="w-10 h-7 object-contain rounded-lg shadow-md bg-white p-1 cursor-pointer transform transition duration-300 hover:scale-110 hover:shadow-lg"
+              />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                alt="MasterCard"
+                className="w-10 h-7 object-contain rounded-lg shadow-md bg-white p-1 cursor-pointer transform transition duration-300 hover:scale-110 hover:shadow-lg"
+              />
             </div>
           </div>
         </div>

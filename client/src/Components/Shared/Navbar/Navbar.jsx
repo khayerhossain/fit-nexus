@@ -90,8 +90,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between py-2">
           {/* Logo + Title */}
           <Link to="/" className="flex items-center">
-            <img className="w-8 h-8" src={logo} alt="Logo" />
-            <span className="text-xl font-bold text-red-500 px-2 py-1 rounded-xl hover:bg-white/10 transition">
+            <img className="w-12 h-10" src={logo} alt="Logo" />
+            <span className="text-xl font-bold text-red-500 mt-2 py-1 rounded-xl hover:bg-white/10 transition">
               FitNexus
             </span>
           </Link>

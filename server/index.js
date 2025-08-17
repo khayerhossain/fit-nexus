@@ -17,9 +17,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middlewares
-app.use(
-  cors({})
-);
+app.use(cors({}));
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
@@ -154,7 +152,7 @@ async function run() {
     });
 
     // save applied trainers data into database (pending requests)
-    app.post("/applied-trainers",  async (req, res) => {
+    app.post("/applied-trainers", async (req, res) => {
       try {
         const trainerData = req.body;
         const result = await appliedTrainersCollection.insertOne(trainerData);
@@ -501,11 +499,14 @@ async function run() {
     app.get("/classes", async (req, res) => {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
+      const sortOrder = req.query.sort === "oldest" ? 1 : -1; // default: newest first
       const skip = (page - 1) * limit;
 
       const total = await classesCollection.estimatedDocumentCount();
       const result = await classesCollection
         .find()
+        .sort({ createdAt: sortOrder }) // use createdAt if available
+        // .sort({ _id: sortOrder }) // use _id if createdAt is not available
         .skip(skip)
         .limit(limit)
         .toArray();
@@ -657,7 +658,7 @@ async function run() {
       }
     });
 
-    // get forums for home page (recents forums)
+    // get forums for home page (recents forums
     app.get("/recent-forums", async (req, res) => {
       try {
         const recentForums = await forumCollection
@@ -672,46 +673,55 @@ async function run() {
     });
 
     //get revenue for showing growth!
-app.get("/revenue-history", async (req, res) => {
-  try {
-    const bookingsCollection = db.collection("bookingData");
+    app.get("/revenue-history", async (req, res) => {
+      try {
+        const bookingsCollection = db.collection("bookingData");
 
-    const history = await bookingsCollection
-      .aggregate([
-        { $match: { paymentStatus: "succeeded" } }, // only success
-        {
-          $group: {
-            _id: { month: { $month: { $toDate: "$createdAt" } } }, // convert string to date
-            totalRevenue: { $sum: "$amount" },
-          },
-        },
-        {
-          $project: {
-            month: "$_id.month",
-            amount: "$totalRevenue",
-            _id: 0,
-          },
-        },
-        { $sort: { month: 1 } },
-      ])
-      .toArray();
+        const history = await bookingsCollection
+          .aggregate([
+            { $match: { paymentStatus: "succeeded" } }, // only success
+            {
+              $group: {
+                _id: { month: { $month: { $toDate: "$createdAt" } } }, // convert string to date
+                totalRevenue: { $sum: "$amount" },
+              },
+            },
+            {
+              $project: {
+                month: "$_id.month",
+                amount: "$totalRevenue",
+                _id: 0,
+              },
+            },
+            { $sort: { month: 1 } },
+          ])
+          .toArray();
 
-    // month number -> month name
-    const months = [
-      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-    const formattedHistory = history.map(item => ({
-      month: months[item.month - 1],
-      amount: item.amount,
-    }));
+        // month number -> month name
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+        const formattedHistory = history.map((item) => ({
+          month: months[item.month - 1],
+          amount: item.amount,
+        }));
 
-    res.json(formattedHistory);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
+        res.json(formattedHistory);
+      } catch (err) {
+        res.status(500).json({ message: err.message });
+      }
+    });
 
     // await client.db("admin").command({ ping: 1 });
     // console.log(
